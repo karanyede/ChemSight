@@ -98,10 +98,3 @@ docker compose up
 ```
 
 The backend will be exposed on `http://localhost:8000`, and the frontend will be served by nginx on `http://localhost:5173` (the compose file maps nginx 80 → host 5173).
-
-
-## Roadmap / Cleanup Targets
-
-- Evaluate generated artifacts and unused exploratory files (e.g., baseline SVG diagrams) before production packaging.
-- Harden desktop packaging (PyInstaller or Briefcase) and add automated UI regression tests.
-- Optionally integrate Celery workers for background PDF creation when large jobs arrive.
