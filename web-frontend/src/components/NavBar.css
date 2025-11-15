@@ -1,0 +1,82 @@
+.app-header {
+  background: #1e1b4b;
+  color: #ffffff;
+}
+
+.app-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+}
+
+.app-header .brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: #e0e7ff;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.nav-links a.active,
+.nav-links a:focus,
+.nav-links a:hover {
+  background-color: #4338ca;
+  outline: none;
+}
+
+.logout {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .app-header nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .logout {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-header nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .logout {
+    align-self: flex-start;
+  }
+}

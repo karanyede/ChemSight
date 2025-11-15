@@ -1,0 +1,10 @@
+Django>=4.2,<5.0
+djangorestframework>=3.14,<4.0
+django-cors-headers>=4.3
+python-dotenv>=1.0
+pandas>=2.1
+reportlab>=3.6
+matplotlib>=3.8
+celery>=5.3
+redis>=5.0
+python-json-logger>=2.0

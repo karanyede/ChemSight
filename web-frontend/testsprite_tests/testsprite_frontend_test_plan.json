@@ -1,0 +1,367 @@
+[
+  {
+    "id": "TC001",
+    "title": "User Login Success with Valid Credentials",
+    "description": "Verify that a user can successfully log in with valid username and password and receive a valid access token.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Authentication Form."
+      },
+      {
+        "type": "action",
+        "description": "Input a registered username and correct password."
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that the backend returns a valid access token."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user session is established and dashboard page is displayed."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "User Login Failure with Invalid Credentials",
+    "description": "Check that login fails with incorrect username or password and appropriate error message is shown.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the Authentication Form."
+      },
+      {
+        "type": "action",
+        "description": "Input an invalid username or incorrect password."
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an error message indicating invalid credentials is displayed."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no access token is issued and user remains on login form."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "User Logout Clears Session and Redirects to Login",
+    "description": "Validate that logging out successfully terminates the session and redirects to the authentication form.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Log in successfully with valid credentials."
+      },
+      {
+        "type": "action",
+        "description": "Click the logout button in the Navigation Bar."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the access token is revoked and removed from client storage."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is redirected to the login page."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "CSV Upload Successful on Web and Desktop",
+    "description": "Ensure users can upload valid chemical equipment CSV files in both Web and Desktop interfaces and receive success confirmation.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Authenticate and navigate to the CSV Upload Panel."
+      },
+      {
+        "type": "action",
+        "description": "Select a valid CSV file with equipment parameters (Equipment Name, Type, Flowrate, Pressure, Temperature)."
+      },
+      {
+        "type": "action",
+        "description": "Upload the selected CSV file."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the backend processes the file without errors."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the client shows a successful upload message."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "CSV Upload Failure with Invalid Format",
+    "description": "Check the system properly handles CSV file uploads with missing required columns or invalid file format by showing errors.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Authenticate and navigate to the CSV Upload Panel."
+      },
+      {
+        "type": "action",
+        "description": "Select a CSV file missing one or more required columns or an unsupported file type."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to upload the file."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an error message is displayed describing invalid format or missing fields."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the upload is rejected and no dataset history is updated."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Display Accurate Data Summary Cards After Upload",
+    "description": "Validate that after a CSV upload, the dashboard shows correct total counts, average values, and equipment type distributions consistent with backend data.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Upload a valid CSV dataset and wait for processing."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the Dashboard."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify summary cards display the correct total equipment count."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify average metrics for Flowrate, Pressure, and Temperature match backend summary."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify type distribution chart matches API data and visualization is correct."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Persist and Display Last 5 Uploaded Dataset History Correctly",
+    "description": "Confirm that the application stores the last five uploaded datasets and displays their details accurately in the history table.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Upload six different valid CSV datasets sequentially."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the History UI panel."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify only the latest five datasets are listed."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dataset details (upload timestamp, summary statistics) are accurate and correspond to backend data."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify older dataset (the first uploaded) is no longer present in the history."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Charts Render Correctly on Web and Desktop",
+    "description": "Ensure type distribution charts and metric visualization charts render accurately using Chart.js (Web) and Matplotlib (Desktop) consistently.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Upload a CSV dataset and allow processing."
+      },
+      {
+        "type": "action",
+        "description": "On Web, navigate to dashboard and check charts."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Chart.js charts display correct dataset distributions and values."
+      },
+      {
+        "type": "action",
+        "description": "On Desktop, open the corresponding dashboard."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify Matplotlib charts display accurate and matching visualizations."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Token-Based Session Persistence Across User Sessions",
+    "description": "Check that after login, the access token persists correctly to allow continued authenticated API calls and that session is maintained across page reloads.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Log in with valid credentials and obtain token."
+      },
+      {
+        "type": "action",
+        "description": "Reload the web application or restart desktop app."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the token is valid and session remains active without prompting for login again."
+      },
+      {
+        "type": "action",
+        "description": "Perform authenticated API calls (data fetch, upload etc.) using persisted token."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify API calls succeed and user remains authorized."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "PDF Report Generation for Selected Dataset",
+    "description": "Validate the functionality to generate downloadable PDF reports containing dataset analyses is working correctly for any selected dataset without errors.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Log in and navigate to a detailed view of a previously uploaded dataset."
+      },
+      {
+        "type": "action",
+        "description": "Trigger the PDF report generation action."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PDF file is generated and download is initiated."
+      },
+      {
+        "type": "assertion",
+        "description": "Open the PDF and confirm it contains accurate dataset summaries, charts, and correctly formatted data."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "UI Elements React Correctly to User Inputs and Navigation",
+    "description": "Check that UI components such as navigation links highlight correctly, buttons respond to clicks, and forms validate inputs properly.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through the app pages via the Navigation Bar."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify active link highlighting updates correctly for each visited page."
+      },
+      {
+        "type": "action",
+        "description": "Enter invalid data in forms (e.g. login, upload) and attempt submission."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify forms show appropriate validation messages and prevent invalid submissions."
+      },
+      {
+        "type": "action",
+        "description": "Interact with buttons such as logout, upload, generate report."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify buttons perform their expected actions with visible feedback."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Handling API Errors Gracefully",
+    "description": "Verify that the frontend gracefully handles backend API failures such as network errors, invalid responses, or server errors without crashing.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate backend API failures (e.g. disconnect network, force 500 errors)."
+      },
+      {
+        "type": "action",
+        "description": "Perform typical operations including login, dataset upload, data fetch."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the frontend shows meaningful error messages to the user."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the application UI remains responsive and stable with no crashes or unhandled exceptions."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Restrict Access to Protected Routes Without Authentication",
+    "description": "Confirm that navigation guards prevent unauthenticated users from accessing dashboard, upload panel, or history pages, redirecting them to login form.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Attempt to navigate directly to protected URLs without logging in."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify redirection to the Authentication Form occurs automatically."
+      },
+      {
+        "type": "action",
+        "description": "Attempt API calls requiring authorization without valid token."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the calls are rejected and unauthorized error responses returned."
+      }
+    ]
+  }
+]

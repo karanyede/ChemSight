@@ -1,0 +1,55 @@
+# Global artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+.mypy_cache/
+pytest_cache/
+venv/
+.venv/
+.env
+.env.*
+
+# Django backend
+backend/media/
+backend/staticfiles/
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/reports/*
+!backend/reports/.gitkeep
+
+# Frontend (Vite/React)
+web-frontend/node_modules/
+web-frontend/dist/
+web-frontend/build/
+web-frontend/coverage/
+web-frontend/.env.local
+web-frontend/.env.development
+web-frontend/.env.production
+web-frontend/testsprite_tests/tmp/
+
+# Desktop app (PyQt)
+desktop-app/__pycache__/
+desktop-app/build/
+desktop-app/dist/
+desktop-app/*.spec
+desktop-app/logs/
+desktop-app/reports/
+desktop-app/.env
+desktop-app/.venv/
+
+# Misc
+coverage/
+dist/
+build/
+uploads/
+reports/
