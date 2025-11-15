@@ -61,14 +61,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push backend image to GHCR
-        env:
-          IMAGE_NAME: ghcr.io/${{ toLower(github.repository) }}/backend
         run: |
+          # Lowercase the GitHub repository identifier in shell and build/push images
+          IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY,,}/backend"
+          echo "Using IMAGE_NAME=$IMAGE_NAME"
           docker build -f Dockerfile_backend -t ${IMAGE_NAME}:${{ github.sha }} .
           docker push ${IMAGE_NAME}:${{ github.sha }}
       - name: Build and push frontend image to GHCR (optional)
-        env:
-          IMAGE_NAME: ghcr.io/${{ toLower(github.repository) }}/frontend
         run: |
+          IMAGE_NAME="ghcr.io/${GITHUB_REPOSITORY,,}/frontend"
+          echo "Using IMAGE_NAME=$IMAGE_NAME"
           docker build -f web-frontend/Dockerfile -t ${IMAGE_NAME}:${{ github.sha }} .
           docker push ${IMAGE_NAME}:${{ github.sha }}
