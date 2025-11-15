@@ -98,3 +98,31 @@ docker compose up
 ```
 
 The backend will be exposed on `http://localhost:8000`, and the frontend will be served by nginx on `http://localhost:5173` (the compose file maps nginx 80 → host 5173).
+
+## CI and Publishing Docker images (GHCR)
+
+The repository includes a GitHub Actions workflow that runs tests and builds artifacts. If you want CI to build and publish containers to GitHub Container Registry (GHCR), follow these steps:
+
+1. Create a Personal Access Token (PAT) with `write:packages` and `read:packages` (and `repo` if needed for private repos).
+2. Add the PAT as a repository secret: `Settings → Secrets → Actions → New repository secret` named `GHCR_PAT`.
+3. If this repo belongs to an Organization, the Organization Admin must allow GitHub Actions to create and publish packages: `Organization Settings → Actions → Policies → Allow GitHub Actions to create and publish packages`.
+
+If `GHCR_PAT` is not set, the CI still runs tests and builds artifacts but will skip publishing container images.
+
+### Vercel & Render deployment automation (GitHub Actions)
+
+This repository includes a `deploy.yml` workflow that automatically deploys the built frontend to Vercel and triggers a Render deployment for the backend on pushes to `main`.
+
+Required GitHub Secrets to set for automated deployments:
+
+- `VERCEL_TOKEN` - optional but required if you want automatic frontend deployments to Vercel. To generate: Vercel Dashboard → Settings → Tokens → Create Token.
+- `GHCR_PAT` - (optional) PAT with `write:packages` and `read:packages` to push images to GHCR.
+- `RENDER_API_KEY` - If hosting the backend on Render, create an API key under Account → API Keys.
+- `RENDER_SERVICE_ID` - The ID of the Render Service that should be redeployed (found in the Render service settings URL or via Render API).
+
+Setting the secrets in GitHub:
+
+1. Go to the GitHub repo → Settings → Secrets → Actions → New repository secret.
+2. Add `VERCEL_TOKEN`, `GHCR_PAT`, `RENDER_API_KEY`, and `RENDER_SERVICE_ID` as appropriate.
+
+Once these are set up and the `deploy.yml` is on the `main` branch, pushes to `main` will automatically deploy the frontend and trigger backend redeploys.
