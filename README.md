@@ -15,7 +15,7 @@ Hybrid analytics platform that shares a Django REST backend between a responsive
 - `web-frontend/` – Vite + React (TypeScript) SPA consuming the API and rendering interactive charts.
 - `desktop-app/` – PyQt5 application with reusable API client, worker threads, and Matplotlib widgets.
 - `sample_data/` – Example CSV fixtures (see `sample_equipment_data.csv`).
-
+ 
 ## Prerequisites
 
 - Python 3.11+ (backend and desktop)
