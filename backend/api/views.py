@@ -106,3 +106,10 @@ class MetricsView(APIView):
             extra={"elapsed_ms": elapsed_ms, "username": request.user.username},
         )
         return Response(payload)
+
+
+class HealthCheckView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, *args, **kwargs):  # type: ignore[override]
+        return Response({"status": "ok"})

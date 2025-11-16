@@ -16,4 +16,5 @@ urlpatterns = [
     path("datasets/<int:pk>/report/", DatasetReportView.as_view(), name="dataset-report"),
     path("upload/", DatasetUploadView.as_view(), name="dataset-upload"),
     path("metrics/", views.MetricsView.as_view(), name="metrics"),
+    path("healthz/", views.HealthCheckView.as_view(), name="health-check"),
 ]

@@ -24,22 +24,27 @@ If you prefer to keep SQLite for experimentation you can skip this step, but the
 
 Add the following (all on Render’s Environment tab for the service):
 
-| Name                                         | Value / guidance                                                                                                            |
-| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `DJANGO_SECRET_KEY`                          | Use a secure random string (never check this into Git).                                                                     |
-| `DJANGO_DEBUG`                               | `false` for production.                                                                                                     |
-| `DJANGO_ALLOWED_HOSTS`                       | Include your Render service domain (e.g., `backend-yourapp.onrender.com`) and any custom domains you add.                   |
-| `DATABASE_URL`                               | From step 1 (skip if using SQLite). Render exposes this automatically if you attach the Postgres add-on.                    |
-| `CORS_ALLOWED_ORIGINS`                       | JSON list or comma-separated hosts that will call the API (include `https://chemsight.vercel.app` and any preview domains). |
-| `CSRF_TRUSTED_ORIGINS`                       | Mirror the same origins as CORS if you use session auth.                                                                    |
-| `DEFAULT_FILE_STORAGE`                       | Leave as default unless storing uploads in S3; your current setup writes to `uploads/` and `reports/`.                      |
-| `DJANGO_TIME_ZONE`                           | Optional; defaults to `UTC`.                                                                                                |
-| `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND` | If you wire up Redis in Render; otherwise keep defaults for local development.                                              |
+| Name                                         | Value / guidance                                                                                                                      |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `DJANGO_SECRET_KEY`                          | Use a secure random string (never check this into Git).                                                                               |
+| `DJANGO_DEBUG`                               | `false` for production.                                                                                                               |
+| `DJANGO_ALLOWED_HOSTS`                       | Include your Render service domain (e.g., `backend-yourapp.onrender.com` or `chemsight.onrender.com`) and any custom domains you add. |
+| `DATABASE_URL`                               | From step 1 (skip if using SQLite). Render exposes this automatically if you attach the Postgres add-on.                              |
+| `CORS_ALLOWED_ORIGINS`                       | JSON list or comma-separated hosts that will call the API (include `https://chemsight.vercel.app` and any preview domains).           |
+| `CSRF_TRUSTED_ORIGINS`                       | Mirror the same origins as CORS if you use session auth.                                                                              |
+| `DEFAULT_FILE_STORAGE`                       | Leave as default unless storing uploads in S3; your current setup writes to `uploads/` and `reports/`.                                |
+| `DJANGO_TIME_ZONE`                           | Optional; defaults to `UTC`.                                                                                                          |
+| `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND` | If you wire up Redis in Render; otherwise keep defaults for local development.                                                        |
 
 ## 4. Run database migrations and seeds
 
 - After each deployment or when you update models, run `python manage.py migrate` using Render’s **Shell** console for the service.
 - If you have fixtures or data seeds, execute them via the same Shell session.
+
+## Health check configuration
+
+- Render expects a `/healthz` endpoint that responds with 200; the backend now exposes `api/healthz/` which returns a simple status payload. You can keep the default `/healthz` health check on the service and leave the port at `10000` so Render can verify the process is ready.
+- Make sure `DJANGO_ALLOWED_HOSTS` includes every hostname Render uses (including `chemsight.onrender.com` and any preview domains) so the ALLOWED_HOSTS check does not reject the health probe or API requests.
 
 ## 5. Attach a custom domain and HTTPS
 
