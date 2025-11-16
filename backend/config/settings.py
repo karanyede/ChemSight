@@ -52,6 +52,7 @@ MIDDLEWARE = [
     "api.middleware.CorrelationIdMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -83,18 +84,30 @@ ASGI_APPLICATION = "config.asgi.application"
 
 # Database -----------------------------------------------------------------
 
+import dj_database_url
+
 def _resolve_sqlite_path() -> Path:
     database_path = os.getenv("DJANGO_SQLITE_PATH")
     if database_path:
         return Path(database_path).expanduser().resolve()
     return BASE_DIR / "db.sqlite3"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": _resolve_sqlite_path(),
+# Use PostgreSQL if DATABASE_URL is set (Railway/production), otherwise SQLite
+if os.getenv("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=os.getenv("DATABASE_URL"),
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": _resolve_sqlite_path(),
+        }
+    }
 
 # Password validation ------------------------------------------------------
 
@@ -116,6 +129,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

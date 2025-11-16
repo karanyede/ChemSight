@@ -76,9 +76,10 @@ Chemical Equipment Parameter Visualizer is a hybrid analytics experience. A Djan
 
 ## Deployment
 
-- Frontend: follow `docs/DEPLOY_VERCEL.md` to build the SPA on Vercel and set `VITE_API_BASE_URL` to your Render backend (plus CORS/ALLOWED_HOSTS tuning).
-- Backend: follow `docs/DEPLOY_RENDER.md` for PostgreSQL provisioning, gunicorn setup, migrations, `/healthz` checks, and hostname configuration.
-- Keep uploads/reports persistent via Render disks or an external blob store, and rerun migrations whenever the schema changes.
+- **Frontend:** follow `docs/DEPLOY_VERCEL.md` to build the SPA on Vercel and set `VITE_API_BASE_URL` to your backend.
+- **Backend (recommended):** follow `docs/DEPLOY_RAILWAY.md` for the simplest deployment experience with auto-provisioned PostgreSQL and zero config health checks.
+- **Backend (alternative):** follow `docs/DEPLOY_RENDER.md` for Render deployment with PostgreSQL setup, gunicorn config, and manual health check configuration.
+- Keep uploads/reports persistent via platform volumes or an external blob store, and rerun migrations whenever the schema changes.
 
 ## Video walkthrough script
 
