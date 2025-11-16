@@ -58,6 +58,12 @@ npm run build
 
 Features include responsive navigation, protected routes, dataset history, distribution charts, and PDF download helper.
 
+### Production backend configuration
+
+- When the Vercel-hosted SPA runs in production, it must talk to your remote Django API instead of `localhost`. Set the same `VITE_API_BASE_URL` your backend exposes, for example `https://api.chemical-equipment.app/api/`, on Vercel (Project Settings → Environment Variables) for both Preview and Production.
+- The backend must accept requests from the Vercel domain: set `ALLOWED_HOSTS` in `backend/.env` (or settings) to include your API host, and add the Vercel-origin (`https://*.vercel.app`) to `CORS_ALLOWED_ORIGINS` so the browser can successfully call endpoints such as `/api/auth/login/`.
+- After deployment, inspect the browser console/network tab; failed API calls (ERR_CONNECTION_REFUSED) mean the SPA is still pointing at `localhost` or the backend is unreachable. Update the host URLs in both the frontend env variable and the backend's `ALLOWED_HOSTS`/CORS entries and redeploy.
+
 ### 3. Desktop Client
 
 ```bash
@@ -87,6 +93,7 @@ Logs carry correlation IDs, and optional Celery/Redis support is scaffolded for 
 - Ensure persistent directories for `uploads/` and `reports/` are writable by the Django process.
 - Update `CORS_ALLOWED_ORIGINS` and `CSRF_TRUSTED_ORIGINS` before exposing the API publicly.
 - Set `DEBUG=0` and configure HTTPS transport for production.
+- For Render deployments specifically, follow the detailed steps in `docs/DEPLOY_RENDER.md` (PostgreSQL setup, gunicorn start command, migrations, and env vars).
 
 ### Notes on deployment
 
